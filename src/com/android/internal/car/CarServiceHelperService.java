@@ -448,12 +448,17 @@ public class CarServiceHelperService extends SystemService
             Slogf.i(TAG, "**CarService connected**");
         }
 
-        sendSetSystemServerConnectionsCall();
-
         mHandler.removeMessages(WHAT_SERVICE_UNRESPONSIVE);
         mHandler.sendMessageDelayed(
                 obtainMessage(CarServiceHelperService::handleCarServiceUnresponsive, this)
                         .setWhat(WHAT_SERVICE_UNRESPONSIVE), CAR_SERVICE_BINDER_CALL_TIMEOUT);
+
+        // Post WHAT_SERVICE_UNRESPONSIVE message before setting system server connection
+        // because CarService may respond before the sendSetSystemServerConnectionsCall call
+        // returns and try to remove WHAT_SERVICE_UNRESPONSIVE message from the handler.
+        // Thus, posting this message after setting system server connection may result in a race
+        // condition where the message is never removed from the handler.
+        sendSetSystemServerConnectionsCall();
     }
 
     private TimingsTraceAndSlog newTimingsTraceAndSlog() {

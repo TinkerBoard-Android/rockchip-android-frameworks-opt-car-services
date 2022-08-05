@@ -76,13 +76,16 @@ public class CarDisplayAreaPolicyProvider implements DisplayAreaPolicy.Provider 
         }
 
         TaskDisplayArea backgroundTaskDisplayArea = new TaskDisplayArea(content, wmService,
-                "BackgroundTaskDisplayArea", BACKGROUND_TASK_CONTAINER);
+                "BackgroundTaskDisplayArea", BACKGROUND_TASK_CONTAINER,
+                /* createdByOrganizer= */ false, /* canHostHomeTask= */ false);
 
         TaskDisplayArea controlBarDisplayArea = new TaskDisplayArea(content, wmService,
-                "ControlBarTaskDisplayArea", CONTROL_BAR_DISPLAY_AREA);
+                "ControlBarTaskDisplayArea", CONTROL_BAR_DISPLAY_AREA,
+                /* createdByOrganizer= */ false, /* canHostHomeTask= */ false);
 
         TaskDisplayArea voicePlateTaskDisplayArea = new TaskDisplayArea(content, wmService,
-                "VoicePlateTaskDisplayArea", FEATURE_VOICE_PLATE);
+                "VoicePlateTaskDisplayArea", FEATURE_VOICE_PLATE,
+                /* createdByOrganizer= */ false, /* canHostHomeTask= */ false);
 
         List<TaskDisplayArea> backgroundTdaList = new ArrayList<>();
         backgroundTdaList.add(voicePlateTaskDisplayArea);
